@@ -1,0 +1,144 @@
+{
+  "atc_reports": [
+    {
+      "year": 2011,
+      "filename": "ATC_2011.pdf",
+      "url": "https://www.td.gov.hk/filemanager/en/content_4568/annual%20traffic%20census%202011b.pdf",
+      "role": "initial historical anchor"
+    },
+    {
+      "year": 2016,
+      "filename": "ATC_2016.pdf",
+      "url": "https://www.td.gov.hk/filemanager/en/content_4875/annual%20traffic%20census%202016.pdf",
+      "role": "initial pre-COVID midpoint"
+    },
+    {
+      "year": 2021,
+      "filename": "ATC_2021.pdf",
+      "url": "https://www.td.gov.hk/filemanager/en/content_5167/Annual%20Traffic%20Census%202021.pdf",
+      "role": "shock and temporal-transfer year"
+    }
+  ],
+  "current_spatial_sources": [
+    {
+      "key": "station_points",
+      "name": "ATC station points",
+      "filename": "ATC_STATION_PT.kmz",
+      "url": "https://static.data.gov.hk/td/traffic-flow-census/ATC_STATION_PT.kmz",
+      "resource_page": "https://data.gov.hk/en-data/dataset/hk-td-tis_7-traffic-flow-census/resource/6b617550-ce5b-45ad-b4f6-54c9cdfa24f9",
+      "role": "latest official station-location anchor; not historical ground truth"
+    },
+    {
+      "key": "station_lines",
+      "name": "ATC station lines",
+      "filename": "ATC_STATION_LINE.kmz",
+      "url": "https://static.data.gov.hk/td/traffic-flow-census/ATC_STATION_LINE.kmz",
+      "resource_page": "https://data.gov.hk/en-data/dataset/hk-td-tis_7-traffic-flow-census/resource/e0dcf0a4-a1a1-4286-9e2b-d835cfeff57b",
+      "role": "latest station-crossing line and direction where available"
+    },
+    {
+      "key": "data_specification",
+      "name": "Traffic Flow Census data specification",
+      "filename": "tfcensus_dataspec.pdf",
+      "url": "https://static.data.gov.hk/td/traffic-flow-census/dataspec/tfcensus_dataspec.pdf",
+      "role": "official field definitions and entity relationships"
+    }
+  ],
+  "road_network_v2_sources": [
+    {
+      "key": "dataset_page",
+      "name": "Road Network v2",
+      "url": "https://data.gov.hk/en-data/dataset/hk-td-tis_15-road-network-v2",
+      "role": "current monthly official road attributes; diagnostic rather than historical ground truth"
+    },
+    {
+      "key": "speed_limit",
+      "filename": "SPEED_LIMIT.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/SPEED_LIMIT.kmz",
+      "role": "route-level speed-limit overrides linked by ROAD_ROUTE_ID"
+    },
+    {
+      "key": "intersection",
+      "filename": "INTERSECTION.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/INTERSECTION.kmz",
+      "role": "intersection and signalisation attributes"
+    },
+    {
+      "key": "roundabout",
+      "filename": "ROUNDABOUT.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/ROUNDABOUT.kmz",
+      "role": "roundabout arm and signalisation attributes"
+    },
+    {
+      "key": "bus_only_lane",
+      "filename": "BUS_ONLY_LANE.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/BUS_ONLY_LANE.kmz",
+      "role": "current bus-only-lane indicator"
+    },
+    {
+      "key": "traffic_features",
+      "filename": "TRAFFIC_FEATURES.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/TRAFFIC_FEATURES.kmz",
+      "role": "zebra crossing, yellow box, toll, and cul-de-sac indicators"
+    },
+    {
+      "key": "vehicle_restriction",
+      "filename": "VEHICLE_RESTRICTION.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/VEHICLE_RESTRICTION.kmz",
+      "role": "current vehicle-restriction indicator"
+    },
+    {
+      "key": "permit",
+      "filename": "PERMIT.kmz",
+      "url": "https://static.data.gov.hk/td/road-network-v2/PERMIT.kmz",
+      "role": "current permit-controlled road indicator"
+    }
+  ],
+  "census_ltpug_sources": [
+    {
+      "year": 2011,
+      "name": "2011 Population Census by Large Tertiary Planning Unit Group",
+      "dataset_id": "censtatd_rcd_1629267205229_857",
+      "feature_service_url": "https://portal.csdi.gov.hk/server/rest/services/common/censtatd_rcd_1629267205229_857/FeatureServer/0",
+      "dataset_page": "https://data.gov.hk/en-data/dataset/hk-censtatd-census_geo-2011-population-census-by-ltpu",
+      "data_dictionary_url": "https://www.censtatd.gov.hk/datagovhk/2011C_classification_idds_en.pdf",
+      "expected_unit_count": 154,
+      "role": "main historical census anchor"
+    },
+    {
+      "year": 2016,
+      "name": "2016 Population By-census by Large Tertiary Planning Unit Group",
+      "dataset_id": "censtatd_rcd_1629267205224_87566",
+      "feature_service_url": "https://portal.csdi.gov.hk/server/rest/services/common/censtatd_rcd_1629267205224_87566/FeatureServer/0",
+      "dataset_page": "https://data.gov.hk/en-data/dataset/hk-censtatd-census_geo-2016-population-bycensus-by-ltpu",
+      "data_dictionary_url": "https://www.censtatd.gov.hk/datagovhk/2016BC_classification_idds_en.pdf",
+      "expected_unit_count": 154,
+      "role": "reference geography and pre-COVID midpoint"
+    },
+    {
+      "year": 2021,
+      "name": "2021 Population Census by Large Tertiary Planning Unit Group",
+      "dataset_id": "censtatd_rcd_1635933102538_82889",
+      "feature_service_url": "https://portal.csdi.gov.hk/server/rest/services/common/censtatd_rcd_1635933102538_82889/FeatureServer/0",
+      "dataset_page": "https://data.gov.hk/en-data/dataset/hk-censtatd-census_geo-2021-population-census-by-ltpu",
+      "data_dictionary_url": "https://www.census2021.gov.hk/doc/2021-statistics-classification-idds-en.pdf",
+      "expected_unit_count": 159,
+      "role": "pandemic stress census case"
+    }
+  ],
+  "later_sources": [
+    {
+      "name": "ATC traffic package",
+      "url": "https://static.data.gov.hk/td/traffic-flow-census/ATC_TRAFFIC_DATA.zip",
+      "role": "structured 2018-2024 bridge"
+    },
+    {
+      "key": "road_centerline",
+      "name": "ATC road centreline",
+      "filename": "CENTERLINE.kmz",
+      "url": "https://static.data.gov.hk/td/traffic-flow-census/CENTERLINE.kmz",
+      "resource_page": "https://data.gov.hk/en-data/dataset/hk-td-tis_7-traffic-flow-census/resource/064619b4-d7ca-4847-bfe5-afca7b911599",
+      "role": "harmonised current road support for station-to-segment linkage"
+    }
+  ]
+}

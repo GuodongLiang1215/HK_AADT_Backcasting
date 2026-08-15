@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 data/raw/atc/reports/*.pdf
+data/raw/atc/annual/*.zip
 data/raw/atc/spatial/*.kmz
 data/raw/atc/spatial/*.kml
 data/raw/census/*
@@ -16,8 +17,3 @@ outputs/tables/*
 !outputs/tables/README.md
 outputs/slides/*
 !outputs/slides/README.md
-README*.md
-docs/
-outputs/
-data/
-*.zip

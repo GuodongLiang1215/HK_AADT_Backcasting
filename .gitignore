@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 data/raw/atc/reports/*.pdf
 data/raw/atc/annual/*.zip
+data/raw/niu_2023/*.csv
 data/raw/atc/spatial/*.kmz
 data/raw/atc/spatial/*.kml
 data/raw/census/*

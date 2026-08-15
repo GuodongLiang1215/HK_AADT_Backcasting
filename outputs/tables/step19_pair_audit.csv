@@ -1,0 +1,4 @@
+﻿transition,analysis_role,same_id_rows,both_labels_measured,recommended_high_confidence_pairs,included_pairs,excluded_not_recommended,excluded_no_coordinate,excluded_no_fold,excluded_unknown_region,excluded_unknown_road_network,major_pairs,minor_pairs,current_coordinate_caveat
+2011-2016,primary_adjacent_five_year,1644,843,808,799,836,9,0,0,0,637,162,latest_official_coordinates_assign_spatial_fold_not_historical_geometry
+2016-2021,primary_adjacent_five_year,1643,843,817,812,826,5,0,0,0,646,166,latest_official_coordinates_assign_spatial_fold_not_historical_geometry
+2011-2021,ten_year_sensitivity,1637,840,783,778,854,5,0,0,0,619,159,latest_official_coordinates_assign_spatial_fold_not_historical_geometry

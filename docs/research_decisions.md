@@ -499,3 +499,212 @@ the failed temporal gate pass. Rebuilding another 2023-only feature stack would
 add cross-sectional detail but would not identify historical change. Multi-year
 backcasting still requires archived year-varying inputs and held-out temporal
 validation.
+
+## Step 21 2023 reconstruction-data and leakage rule
+
+Step 21 verifies that a materially richer 2023 public-data experiment can be
+built. The official archive contains 447,679 strategic-detector versions, 364
+vehicle-class files, 27 GTFS versions and 16 road-network snapshots for 2023.
+Representative files confirm about 675--693 active strategic detectors, 73--75
+vehicle-class detectors and a usable mid-year GTFS schema. These counts establish
+availability and schema only; the downloaded samples are not annual predictors.
+
+Dynamic coverage remains selective. Of 880 directly measured 2023 ATC stations,
+12.5% are within 100 metres of a strategic detector, while the stricter
+distance-and-road-name rule identifies 9.3% as credible nearby support. The
+credible share is 11.2% on major roads but only 2.2% on minor roads. The
+vehicle-class network is smaller: 3.4% lie within 100 metres and no minor-road
+station passes the credible-nearby rule. Dynamic sensors therefore support a
+sensor-assisted task; they do not by themselves create a full-network truth set.
+
+Current public detector-location lists contain 99.9% of the strategic IDs and
+97.4% of the vehicle-class IDs seen in the representative 2023 files. This is
+strong ID compatibility, but it does not prove that current coordinates are the
+exact 2023 positions. Coordinates remain provisional and distance results must be
+reported at 25, 50, 100 and 250 metres with a road-name sensitivity check.
+
+Traffic-detector values are direct proxies for AADT even though they are separate
+measurements. Step 22 must therefore report two distinct tasks: sensor-assisted
+interpolation with the dynamic measurements retained, and sensor-free spatial
+extrapolation with detectors inside held-out regions masked. Niu traffic and
+emissions are excluded from every model feature and validation score because they
+share the 2023 ATC lineage. Census and Niu may enter only after the AADT gate, as
+downstream equity inputs or descriptive benchmarks.
+
+The Step 21 decision is permission to run a bounded Step 22 experiment, not a
+claim that 2023 reconstruction has succeeded. Step 22 must freeze temporal
+sampling, spatial folds, baselines and leakage masks before fitting. A 2023
+traffic surface can proceed to an equity proof of concept only if it adds useful
+out-of-fold skill beyond the honest road-hierarchy baseline and has acceptable
+aggregate and subgroup bias in the sensor-free task.
+
+## Step 22 bounded 2023 reconstruction rule
+
+Step 22 tests the richer 2023 source stack on 879 directly measured stations in
+the existing five spatial folds. One additional measured station has no
+coordinates and is explicitly excluded from spatial validation. The dynamic
+sample is frozen before fitting: the second Tuesday and second Saturday of each
+month, with strategic-detector snapshots at 08:00, 13:00 and 18:00 and one
+full-day vehicle-class profile per sampled date. It yields 720 strategic and 70
+vehicle-class detector summaries with median sample coverage of 95.8% and 100%.
+These summaries are predictors, not estimates of annual detector AADT.
+
+The historical June 2023 Road Network 2nd Generation snapshot matches 99.1% of
+the spatially eligible stations at high or moderate confidence, with a median
+station-to-centreline distance of 2.55 metres. Current ATC point coordinates and
+current detector location lists remain compatibility anchors; exact historical
+position stability is not proved merely by the high match rate.
+
+The 10-cell fold-internal hierarchy lookup has pooled spatial OOF MAE 11,042,
+R-squared 0.482 and aggregate bias -13.4%. The frozen HGB using 2023 road
+structure lowers MAE to 9,783. Adding weekday and Saturday GTFS context lowers it
+only to 9,733: a 0.51% increment whose spatial-cluster interval crosses zero.
+The combined structure-plus-GTFS model nevertheless beats the honest lookup by
+11.85% in all five folds. The defensible cross-sectional gain is primarily from
+the matched 2023 road structure, not from a demonstrated GTFS effect.
+
+The dynamic detector result is deployment-specific. With all local detectors
+retained, pooled MAE is 9,675, only 0.59% better than structure plus GTFS and not
+separated from zero by the fold-cluster interval. Among the 82 stations passing
+the Step 21 credible-nearby-sensor rule, however, sensor assistance lowers MAE
+from 21,516 to 19,220, a 10.67% improvement that appears in all five folds. For
+the other 797 stations it worsens MAE by 2.03%. Dynamic detectors are therefore
+useful where genuine local sensor support exists; that result may not be
+transported to unsupported roads.
+
+For the primary sensor-free task, all detectors assigned to the held-out fold or
+within one kilometre of any held-out station are removed. The dynamic model then
+has MAE 9,957, R-squared 0.532 and aggregate bias -12.7%. It remains 9.82% better
+than the hierarchy lookup, but is 2.30% worse than structure plus GTFS. It also
+misses the frozen bias gates: New Territories aggregate bias is -16.4% and the
+maximum region/major-minor absolute bias exceeds 15%.
+
+The 2023 full-network reconstruction gate therefore fails. Step 22 supports a
+stronger 2023 measured-station cross-sectional model and a separate
+sensor-supported use case. It does not validate extrapolation to the unsampled
+full road network, especially unmeasured local streets, and it does not establish
+multi-year segment backcasting. Population-weighted equity estimates remain
+downstream of a traffic-surface gate and may not be presented as full-network
+results from this experiment.
+
+## Step 22 deployability correction
+
+The first Step 22 implementation mixed two ATC-station fields (`road_network`
+and `road_type`) and two station-to-road matching diagnostics into its structural
+predictor block. Those values are not attributes of the 34,990-segment official
+centreline. The resulting improvement is an oracle diagnostic, not evidence that
+the model can be applied to roads without ATC stations. The earlier 9.82%
+sensor-free improvement claim is superseded.
+
+The corrected implementation first builds structural, GTFS and detector-proxy
+features on every official centreline segment. Station outcomes are joined only
+after that table is complete. ATC functional class and matching diagnostics enter
+one clearly labelled `atc_class_oracle_hgb`; this score is excluded from every
+deployment gate. Major/minor and detailed road type remain valid evaluation
+strata, but not predictors.
+
+The corrected Step 22 decision must be based on the deployable structure,
+structure-plus-GTFS, sensor-assisted and masked sensor-free models. Passing the
+feature-generation gate shows only that predictors can be calculated on the full
+network; it does not show that AADT on unmeasured local streets is accurate. Full
+network reconstruction still requires material skill over the hierarchy lookup,
+acceptable aggregate and subgroup bias, and improvement that survives the
+sensor-free spatial task.
+
+## Step 22 decision-audit refinement
+
+A failed gate now records whether the estimated effect is below the frozen
+materiality threshold, whether the five-fold cluster interval includes zero,
+or whether improvement is insufficiently consistent across folds. These are
+different evidential outcomes and must not be described with one generic
+"failed" interpretation. Thresholds are not changed after seeing the results:
+incremental GTFS and detector blocks retain their 2% threshold, while a model's
+skill over the hierarchy lookup retains the 5% threshold.
+
+The deployable structural comparison is split into three questions: structure
+only versus the hierarchy lookup, GTFS versus structure only, and structure plus
+GTFS versus the hierarchy lookup. This prevents a small GTFS increment from
+being reported under a structure-only label.
+
+The sensor-free mask audit now states its denominator and deployment scenario.
+`retained_share` is the share of source sensors retained after removing sensors
+in the held-out fold and within one kilometre of held-out ATC locations. It
+simulates detector-sparse extrapolation around labelled test road segments; it
+does not validate roads outside ATC label support.
+
+Step 15 and Step 22 estimates are not pooled into one performance number. Their
+years, station support and feature anchors differ, and only a minority of station
+IDs overlap exactly. The Step 15 panel also contains substantial local-
+distributor support, so the score difference cannot be attributed to the 2023
+minor-road sample alone. The comparability audit reports both results and freezes
+this non-causal interpretation.
+
+## Step 23A independent OSM road-class gate
+
+Step 23A tests one specific explanation for the corrected Step 22 result: the
+official ATC functional class is informative but unavailable on unmeasured road
+segments, while OpenStreetMap `highway=*` is an independent, full-network
+candidate for the same missing information. The experiment is deliberately
+restricted to 2023. It does not start historical OSM modelling before showing
+that the 2023 class is adequately matched and adds deployable skill.
+
+The OSM state is fixed at 30 June 2023 to align with the official mid-2023 road
+snapshot. Highway ways are obtained from an Overpass historical-date query in
+16 spatial tiles and
+matched to every official centreline segment using geometry and road names only.
+AADT, ATC `road_network`, ATC `road_type`, and station-to-centreline matching
+diagnostics do not enter the OSM match or any deployable predictor block. Low-
+confidence OSM matches are treated as unmatched rather than assigned a possibly
+wrong functional class.
+
+The primary feature block contains grouped OSM highway classes. Lanes,
+maxspeed, oneway, link, bridge, tunnel, roundabout, access and name-presence tags
+form a separate secondary block. They are not allowed to rescue a failed primary
+hypothesis after results are seen. ATC road class enters one oracle model only;
+its result measures the remaining information ceiling and cannot support a full-
+network claim.
+
+The frozen comparison uses the same 879 stations and five spatial folds as the
+corrected Step 22 experiment. The primary OSM model is compared both with the
+10-cell hierarchy lookup and with the deployable structure-plus-GTFS model. A
+2023 OSM gate passes only if high/moderate matches cover at least 80% of official
+centreline length, 90% of measured stations, and 80% of MINOR stations; the model
+improves MAE by at least 5% over the hierarchy and 2% over structure plus GTFS;
+the fold-cluster interval excludes zero; at least three of five folds improve;
+MINOR-road skill also improves by at least 2%; pooled absolute bias is no more
+than 10%; and region plus MAJOR/MINOR absolute bias is no more than 15%.
+
+Only the complete gate authorises Step 23B, which would audit OSM coverage,
+classification stability and missingness in 2011, 2016 and 2021 before any
+multi-year fit. A 2023 pass is therefore evidence for a deployable cross-sectional
+road-class feature, not evidence of historical segment-level backcasting. A fail
+means the failed component must be diagnosed before historical OSM or equity
+modelling proceeds.
+
+The initial access implementation used the ohsome element-geometry endpoint.
+Its metadata and aggregation endpoints were reachable, but the geometry endpoint
+returned HTTP 403 before any OSM features were delivered. This is an access-
+route failure, not a negative data or model result. Step 23A therefore uses the
+Overpass API `date` setting with the same 30 June 2023 timestamp, the same
+`highway` ways, and the same frozen matching and decision gates. No scientific
+criterion changes with this implementation correction.
+
+The main OpenStreetMap Overpass instance subsequently returned HTTP 429 during
+the tiled historical request. This is a public-service rate limit, not evidence
+about OSM coverage or model skill. The acquisition layer now sends sequential
+identified requests, pauses between successful tiles, keeps each completed tile
+in the existing cache, waits 30 seconds after a 429 response, and switches to a
+second historical-capable public instance. Each freshly downloaded tile records
+the instance actually used in `step23a_osm_source_audit.csv`; cached tiles are
+marked as not requeried. The timestamp, query, matching rules, folds, models and
+all frozen decision thresholds remain unchanged.
+
+One dense top-level bbox then returned HTTP 504 from both configured instances
+after the preceding bboxes had downloaded successfully. This is a query-size
+failure, not a coverage result. Step 23A now subdivides only a bbox for which all
+endpoint attempts end in HTTP 504 or a read timeout. It uses four child bboxes,
+and permits one further subdivision if a child remains too large. Completed
+parent or child responses remain cached, so a rerun resumes at the first missing
+subtile. Subdivision changes only request geometry; the historical timestamp,
+deduplication by OSM way ID, centreline matching and frozen model gates do not
+change.

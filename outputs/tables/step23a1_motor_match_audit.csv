@@ -1,0 +1,7 @@
+﻿metric,value,threshold,pass,matching_rule
+network_accepted_length_share,0.9987600055972997,0.8,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"
+station_accepted_share,1.0,0.9,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"
+minor_station_accepted_share,1.0,0.8,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"
+network_unmatched_segment_share,0.002200628751071735,,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"
+median_accepted_distance_m,0.1170950845131185,,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"
+median_accepted_overlap_share,1.0,,True,"high: distance<=15m and (overlap>=0.50 or name>=0.50); moderate: distance<=30m and (overlap>=0.20 or name>=0.25), or distance<=8m"

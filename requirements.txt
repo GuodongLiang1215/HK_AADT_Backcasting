@@ -10,4 +10,5 @@ scikit-learn
 matplotlib
 shapely
 pyproj
+pyogrio
 truststore

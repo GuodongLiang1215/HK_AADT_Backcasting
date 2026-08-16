@@ -1,0 +1,10 @@
+﻿osm_highway_group,network_segment_count,training_station_count,network_prediction_mean,network_prediction_median,network_prediction_q10,network_prediction_q90,observed_station_mean,observed_station_median,mean_abs_change_when_indicator_removed,max_abs_change_when_indicator_removed,interpretation
+local,9226,138,4555.785486481528,3592.1564928582306,1173.0809970995947,8340.179874129251,6414.420289855072,3510.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+motorway,2268,84,42987.10000468159,27477.592432925598,15357.43480732808,79021.9572346525,58116.42857142857,51850.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+primary,3844,147,25199.425919838257,25057.730965393173,18128.166924127472,31058.58109466959,32358.231292517008,28620.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+secondary,8296,287,16082.614717789142,15864.24020496371,10854.937353132742,21240.593681775437,17721.811846689896,15760.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+service,4646,5,16431.974570010658,16154.928251129713,12364.782164737524,20761.484061744653,39332.0,15720.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+tertiary,5758,168,9470.393036723724,9092.363196900184,5594.041009715311,13782.355425736554,9754.82142857143,8680.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+track,2,0,14537.017566458988,14537.017566458988,10622.723419815775,18451.311713102205,,,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+trunk,873,50,44118.10673671413,29364.007356784437,15979.710879902284,80740.03626163522,58900.0,61920.0,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth
+unmatched,77,0,16330.607781090368,14910.38745172759,12353.371319777205,21778.72364470592,,,0.0,0.0,full-sample diagnostic only; network predictions are not validation truth

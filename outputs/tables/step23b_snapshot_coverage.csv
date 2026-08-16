@@ -1,0 +1,9 @@
+﻿year,official_segment_count,accepted_segment_share,accepted_length_share,station_to_2023_segment_mapping_share,station_accepted_osm_share,network_coverage_pass,station_coverage_pass,fixed_support_warning
+2016,34990,0.9688196627607888,0.9631110440467326,,,True,False,"2023 official centreline is a compatibility support, not historical network truth"
+2018,34990,0.9751643326664762,0.9704205594787038,0.9814169570267132,0.9814169570267132,True,True,"2023 official centreline is a compatibility support, not historical network truth"
+2019,34990,0.9868248070877393,0.9895677727904222,0.6750861079219288,0.6750861079219288,True,False,"2023 official centreline is a compatibility support, not historical network truth"
+2020,34990,0.9898256644755644,0.9887384131071916,0.37672811059907835,0.37672811059907835,True,False,"2023 official centreline is a compatibility support, not historical network truth"
+2021,34990,0.9945127179194055,0.9950217678798075,0.38029782359679265,0.38029782359679265,True,False,"2023 official centreline is a compatibility support, not historical network truth"
+2022,34990,0.995055730208631,0.9948515188208665,0.6839729119638827,0.6839729119638827,True,False,"2023 official centreline is a compatibility support, not historical network truth"
+2023,34990,0.9977993712489283,0.9987600055972997,0.9988636363636364,0.9988636363636364,True,True,"2023 official centreline is a compatibility support, not historical network truth"
+2024,34990,0.9977993712489283,0.9986867132912434,0.6849775784753364,0.6849775784753364,True,False,"2023 official centreline is a compatibility support, not historical network truth"

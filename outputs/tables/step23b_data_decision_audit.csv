@@ -1,0 +1,9 @@
+﻿decision,pass,evidence,failed_criterion,action
+overpass_can_supply_a_valid_2011_snapshot,False,official first attic state=2012-09-12T06:55:00Z; direct equality=False,pre_attic_date_is_not_a_2011_state,do not use an Overpass 2011 request as a historical 2011 feature layer
+2016_and_2018_2024_fixed_support_network_coverage_passes,True,minimum_length_coverage=0.963; threshold=0.80,none,"interpret this as compatibility with a fixed 2023 centreline, not historical network completeness"
+2018_2024_measured_station_osm_coverage_passes,False,minimum_station_coverage=0.377; threshold=0.90,one_or_more_years_below_station_coverage_threshold,retain the station-to-2023-segment mapping share as a separate denominator
+osm_has_minimum_observed_within_segment_tag_variation,True,pooled_primary_transition_tag_change_share=0.144; threshold=0.05,none,variation is necessary but not sufficient for a temporal traffic model
+osm_changes_are_proven_real_road_changes,False,"OSM alone cannot distinguish mapping edits, rematching, and physical road changes",change_provenance_not_identified,do not interpret tag churn as traffic change without an external change source
+osm_tags_explain_most_annual_aadt_change,False,share_absolute_aadt_change_when_osm_unchanged=0.844,descriptive_alignment_is_not_temporal_identification,report the unchanged-OSM share rather than claiming annual explanatory power
+step23b_data_authorises_historical_osm_modelling,False,"data availability, fixed-support coverage, and edit churn do not validate segment-level temporal downscaling",step23a1_and_nonartifactual_temporal_signal_gates_are_separate,keep historical modelling locked; use this audit to decide whether another dynamic source is required
+step23b_data_establishes_multiyear_segment_backcasting,False,no historical AADT model is trained in Step 23B-data,data_audit_only,do not call these OSM snapshots a validated backcast

@@ -1,0 +1,4 @@
+﻿candidate,reference,evaluation_subset,n,candidate_mae,reference_mae,mae_improvement_pct,cluster_bootstrap_low,cluster_bootstrap_high,improved_fold_count
+osm_absolute,hierarchy_lookup,all,879,10290.982386187918,11041.643913538112,6.798458030600055,-1250.5517703764522,-401.8869074454333,4
+osm_absolute,structure_gtfs_absolute,all,879,10290.982386187918,10976.014025866998,6.241169499826414,-1108.190194471756,-516.3741727330714,5
+osm_absolute,structure_gtfs_absolute,minor,182,4314.851554524661,5705.025150865241,24.367527917554266,-1953.262923576293,-1088.4337458809364,5

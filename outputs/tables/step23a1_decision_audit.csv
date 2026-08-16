@@ -1,0 +1,13 @@
+﻿decision,pass,evidence,failed_criterion
+corrected_motor_crosswalk_coverage_passes,True,"network, station, and MINOR thresholds are evaluated separately",none
+material_osm_groups_have_foldwise_label_support,False,material_group_threshold=1.00%; unsupported=service,min_training_count_below_min_samples_leaf
+absolute_osm_feature_block_beats_hierarchy_lookup,True,"improvement=6.80%; interval=[-1250.6,-401.9]; improved_folds=4/5",none
+absolute_osm_feature_block_adds_skill_beyond_context,True,"improvement=6.24%; interval=[-1108.2,-516.4]; improved_folds=5/5",none
+absolute_osm_feature_block_improves_minor_roads,True,"improvement=24.37%; interval=[-1953.3,-1088.4]; improved_folds=5/5",none
+poisson_mean_model_overall_bias_passes,True,bias=-4.28%; threshold=±10%,none
+poisson_mean_model_subgroup_bias_passes,False,maximum_region_or_network_abs_bias=38.04%; threshold=15%,region_or_network_bias_exceeds_15pct
+poisson_mean_model_prediction_bin_calibration_passes,False,maximum_prediction_quintile_abs_bias=17.47%; threshold=15%,prediction_bin_bias_exceeds_15pct
+poisson_mean_model_rmse_is_noninferior,False,poisson_to_absolute_rmse_ratio=1.0662; ceiling=1.05,rmse_deterioration_exceeds_5pct
+step23a1_full_network_2023_gate,False,coverage=True; label_support=False; feature_skill=True; poisson_mean=False,one_or_more_predeclared_full_network_gates_failed
+step23b_data_audit_may_run_independently,True,historical availability and edit-churn auditing does not use or change the 2023 model gate,none
+step23b_historical_modelling_is_authorised,False,Step 23B-data is descriptive; modelling requires both the 2023 gate and a separate temporal-signal decision,data_audit_does_not_establish_temporal_identification

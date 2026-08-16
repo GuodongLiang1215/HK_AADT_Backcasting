@@ -4,6 +4,10 @@ __pycache__/
 data/raw/atc/reports/*.pdf
 data/raw/atc/annual/*.zip
 data/raw/niu_2023/*.csv
+data/raw/step21_2023/*
+data/raw/step22_2023/*
+data/raw/step23a_osm_2023/*
+data/raw/step23b_osm_history/*
 data/raw/atc/spatial/*.kmz
 data/raw/atc/spatial/*.kml
 data/raw/census/*

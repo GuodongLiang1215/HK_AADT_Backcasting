@@ -1,0 +1,8 @@
+﻿transition,station_pairs,osm_unchanged_pair_share,share_total_absolute_aadt_change_on_osm_unchanged_pairs,median_abs_aadt_change_osm_unchanged,median_abs_aadt_change_osm_changed,spearman_tag_change_indicator_vs_abs_aadt_change,interpretation
+all_2018_2024,2784,0.8778735632183908,0.8443987003200868,610.0,665.0,0.02568649555285986,association is descriptive and does not establish that an OSM edit is a real road change
+2018-2019,581,0.882960413080895,0.7875373649114739,590.0,805.0,0.06565152613488578,association is descriptive and does not establish that an OSM edit is a real road change
+2019-2020,327,0.8103975535168195,0.7479756034259019,590.0,1035.0,0.09302306035474436,association is descriptive and does not establish that an OSM edit is a real road change
+2020-2021,327,0.746177370030581,0.7537955092615339,540.0,480.0,-0.025534722752851017,association is descriptive and does not establish that an OSM edit is a real road change
+2021-2022,332,0.9186746987951807,0.9185748405898723,630.0,680.0,0.01759289672617673,association is descriptive and does not establish that an OSM edit is a real road change
+2022-2023,606,0.929042904290429,0.9195929714702151,720.0,740.0,0.009754520886433965,association is descriptive and does not establish that an OSM edit is a real road change
+2023-2024,611,0.9067103109656302,0.9010840267887619,575.0,610.0,0.028667764460665757,association is descriptive and does not establish that an OSM edit is a real road change

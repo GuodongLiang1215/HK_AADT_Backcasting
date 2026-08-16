@@ -1,0 +1,7 @@
+﻿reviewer_verdict,definition,counts_as_match_error
+correct,same drivable road and carriageway,False
+parallel_carriageway_mismatch,wrong parallel or opposite carriageway,True
+grade_level_mismatch,"wrong elevated, tunnel, or ground-level road",True
+nonmotorized,matched candidate is not a motor-vehicle road,True
+wrong_road,different road or unrelated geometry,True
+indeterminate,imagery or map evidence is insufficient,

@@ -82,6 +82,7 @@ MIN_ATC_COLOCATIONS = 20
 MIN_CONSECUTIVE_ARCHIVE_YEARS = 3
 MIN_DISTINCT_DAYS_PER_YEAR = 300
 LOCAL_GROUPS = {"local", "service"}
+STEP24_REVISION = "2026-08-17.3"
 
 SOURCES = {
     "strategic_detector": {
@@ -278,7 +279,21 @@ def read_csv_flexible(path: Path) -> pd.DataFrame:
 
 
 def normalise_location_table(source: str, frame: pd.DataFrame) -> pd.DataFrame:
-    id_col = find_column(frame, ("device_id", "detector_id", "station_id", "id"), required=False)
+    # The strategic-detector location resource names its official identifier
+    # ``AID_ID_Number``.  Preserve that identifier because the archived raw
+    # speed/volume XML uses the same AID values.  Falling back to row-order
+    # pseudo IDs would make historical-to-current linkage impossible.
+    id_col = find_column(
+        frame,
+        (
+            "device_id",
+            "detector_id",
+            "station_id",
+            "aid_id_number",
+            "id",
+        ),
+        required=False,
+    )
     lat_col = find_column(frame, ("latitude", "lat", "wgs84_latitude"), required=False)
     lon_col = find_column(frame, ("longitude", "long", "lon", "lng", "wgs84_longitude"), required=False)
     road_col = find_column(frame, ("road_en", "road_name_en", "road_name", "road", "street_ename"), required=False)
@@ -719,6 +734,88 @@ def attach_nearest_network(locations: pd.DataFrame, network: pd.DataFrame) -> tu
                 }
             )
     return result, pd.DataFrame(coverage_rows)
+
+
+def assign_frozen_spatial_folds(
+    locations: pd.DataFrame,
+    stations: pd.DataFrame,
+    network: pd.DataFrame,
+) -> pd.DataFrame:
+    """Recover the frozen five spatial regions for detector locations.
+
+    The full-network feature table does not carry station fold labels.  Fold
+    labels are therefore recovered from the already frozen labelled-station
+    table: the geographic centre of each frozen fold is calculated once, and
+    each detector is assigned to its nearest frozen centre.  Detectors without
+    coordinates, such as exact ROUTE_ID-linked AIVAS rows, use the coordinates
+    of their already matched official centreline segment.
+
+    This repairs an interface field only.  It does not create a new split,
+    alter any detector-to-road match, or use an AADT outcome.
+    """
+    fold_col = find_column(stations, ("spatial_fold", "fold"))
+    station_lon = find_column(stations, ("centroid_longitude", "road_longitude", "longitude", "lon"))
+    station_lat = find_column(stations, ("centroid_latitude", "road_latitude", "latitude", "lat"))
+    network_lon = find_column(network, ("centroid_longitude", "road_longitude", "longitude", "lon"))
+    network_lat = find_column(network, ("centroid_latitude", "road_latitude", "latitude", "lat"))
+    network_segment = find_column(
+        network,
+        ("road_2023_segment_index", "segment_index", "road_segment_index"),
+        required=False,
+    )
+
+    labelled = stations.copy()
+    labelled["_fold"] = pd.to_numeric(labelled[fold_col], errors="coerce")
+    labelled["_lon"] = pd.to_numeric(labelled[station_lon], errors="coerce")
+    labelled["_lat"] = pd.to_numeric(labelled[station_lat], errors="coerce")
+    labelled = labelled.dropna(subset=["_fold", "_lon", "_lat"])
+    centres = labelled.groupby("_fold", as_index=False)[["_lon", "_lat"]].mean()
+    if centres.empty:
+        raise ValueError("Frozen station folds have no valid geographic centres")
+
+    result = locations.copy()
+    result["_fold_lon"] = pd.to_numeric(result["longitude"], errors="coerce")
+    result["_fold_lat"] = pd.to_numeric(result["latitude"], errors="coerce")
+    result["spatial_fold_assignment_method"] = np.where(
+        result[["_fold_lon", "_fold_lat"]].notna().all(axis=1),
+        "detector_coordinate_to_nearest_frozen_fold_centre",
+        "",
+    )
+
+    segment_values = network[network_segment] if network_segment else pd.Series(network.index, index=network.index)
+    segment_locations = {
+        normalise_identifier(segment): (
+            pd.to_numeric(pd.Series([network.at[index, network_lon]]), errors="coerce").iloc[0],
+            pd.to_numeric(pd.Series([network.at[index, network_lat]]), errors="coerce").iloc[0],
+        )
+        for index, segment in segment_values.items()
+    }
+    missing_coordinates = ~result[["_fold_lon", "_fold_lat"]].notna().all(axis=1)
+    for row_index in result.index[missing_coordinates & result["nearest_segment_index"].notna()]:
+        point = segment_locations.get(normalise_identifier(result.at[row_index, "nearest_segment_index"]))
+        if point is None or not all(np.isfinite(value) for value in point):
+            continue
+        result.at[row_index, "_fold_lon"] = point[0]
+        result.at[row_index, "_fold_lat"] = point[1]
+        result.at[row_index, "spatial_fold_assignment_method"] = (
+            "route_linked_segment_to_nearest_frozen_fold_centre"
+        )
+
+    reference_latitude = float(labelled["_lat"].median())
+    centre_xy = projected_xy(centres["_lon"], centres["_lat"], reference_latitude)
+    valid = result[["_fold_lon", "_fold_lat"]].notna().all(axis=1)
+    result["nearest_spatial_fold"] = np.nan
+    result["distance_to_frozen_fold_centre_m"] = np.nan
+    if valid.any():
+        query_xy = projected_xy(
+            result.loc[valid, "_fold_lon"],
+            result.loc[valid, "_fold_lat"],
+            reference_latitude,
+        )
+        distance, centre_index = cKDTree(centre_xy).query(query_xy, k=1)
+        result.loc[valid, "nearest_spatial_fold"] = centres.iloc[centre_index]["_fold"].to_numpy()
+        result.loc[valid, "distance_to_frozen_fold_centre_m"] = distance
+    return result.drop(columns=["_fold_lon", "_fold_lat"])
 
 
 def attach_aivas_rows(locations: pd.DataFrame, manifest: pd.DataFrame) -> pd.DataFrame:
@@ -1213,6 +1310,8 @@ def main() -> None:
     FIGURE_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
+    print(f"Step 24 revision: {STEP24_REVISION}")
+
     network_path = first_existing(NETWORK_CANDIDATES)
     station_path = first_existing(STATION_CANDIDATES)
     print(f"Using network features: {network_path.relative_to(PROJECT_ROOT)}")
@@ -1256,6 +1355,7 @@ def main() -> None:
     )
     locations = attach_aivas_rows(locations, manifest)
     locations, network_coverage = attach_nearest_network(locations, network)
+    locations = assign_frozen_spatial_folds(locations, stations, network)
     save_csv(locations, LOCATION_PATH)
     save_csv(network_coverage, NETWORK_COVERAGE_PATH)
 
